@@ -1,0 +1,73 @@
+---
+title: "Weather_Graphs"
+author: "Wacker"
+date: "2026-04-14"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+##Some graphs on the data I made while studying for the exam
+
+```{r}
+library(tidyverse)
+library(ZaileyFlagWeather)
+data("Flagstaff_Weather")
+```
+
+```{r message=FALSE, warning=FALSE}
+ggplot(Flagstaff_Weather, aes(x = date)) +
+  geom_line(aes(y = tmax), color = "red", alpha = 0.4) +
+  geom_line(aes(y = tmin), color = "blue", alpha = 0.4) +
+  geom_smooth(aes(y = tmax), color = "red", se = FALSE) +
+  geom_smooth(aes(y = tmin), color = "blue", se = FALSE) +
+  labs(title = "Daily Maximum and Minimum Temperature",
+       subtitle = "Flagstaff Pulliam Airport (1950–2019)",
+       x = "Date", y = "Temperature (°F)") +
+  theme_minimal()
+```
+
+```{r}
+annual_tmax <- Flagstaff_Weather |>
+  mutate(year = lubridate::year(date)) |>
+  group_by(year) |>
+  summarise(avg_tmax = mean(tmax, na.rm = TRUE))
+
+ggplot(annual_tmax, aes(x = year, y = avg_tmax)) +
+  geom_line(color = "darkred") +
+  geom_smooth(method = "lm", color = "black", se = TRUE) +
+  labs(title = "Annual Average Maximum Temperature",
+       x = "Year", 
+       y = "Average TMAX (°F)") +
+  theme_minimal()
+```
+
+```{r}
+annual_prcp <- Flagstaff_Weather |>
+  mutate(year = lubridate::year(date)) |>
+  group_by(year) |>
+  summarise(total_prcp = sum(prcp, na.rm = TRUE))
+
+ggplot(annual_prcp, aes(x = year, y = total_prcp)) +
+  geom_line(color = "steelblue") +
+  geom_smooth(method = "lm", color = "black") +
+  labs(title = "Annual Total Precipitation",
+       x = "Year", 
+       y = "Total Precipitation (inches)") +
+  theme_minimal()
+```
+
+```{r}
+annual_snow <- Flagstaff_Weather |>
+  mutate(year = lubridate::year(date)) |>
+  group_by(year) |>
+  summarise(total_snow = sum(snow, na.rm = TRUE))
+
+ggplot(annual_snow, aes(x = year, y = total_snow)) +
+  geom_line(color = "darkblue") +
+  labs(title = "Annual Total Snowfall",
+       x = "Year", 
+       y = "Total Snowfall (inches)") +
+  theme_minimal()
+```
+
