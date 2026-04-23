@@ -1,0 +1,20 @@
+Package: ZaileyFlagWeather
+Type: Package
+Title: Assignment 10
+Version: 0.1.0
+Authors@R: 
+  person(given = "Zailey",
+         family = "Wacker",
+         email = "zmw24@nau.edu",
+         role = c("aut", "cre"))
+Description: This is code for Assignment 10, it has Flagstaff weather data
+        as well as a fun game function Fizz Buzz.
+License: No license
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Depends:
+    R (>= 3.5)
+RoxygenNote: 7.3.2
