@@ -1,2 +1,0 @@
-# ZaileyFlagWeather
-Assignment 10
